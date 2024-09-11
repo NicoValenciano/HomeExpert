@@ -4,7 +4,11 @@
   "description": "Aplicacion de servicios para el hogar",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app",
+    "lint": "npx standard",
+    "lint:fix": "npx standard --fix",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -18,6 +22,14 @@
   "homepage": "https://github.com/NicoValenciano/HomeExpert#readme",
   "dependencies": {
     "axios": "^1.7.7",
-    "express": "^3.21.2"
+    "dotenv": "^16.4.5",
+    "express": "^5.0.0"
+  },
+  "devDependencies": {
+    "husky": "^9.1.5",
+    "standard": "^17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "standard"
   }
 }
