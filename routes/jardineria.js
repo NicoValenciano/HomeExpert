@@ -1,20 +1,20 @@
-//const { Router } = require('express')
-//const { getJardineros, getJardinero, getJardineroFiltro } = require('../controllers/jardineria')
+//  const { Router } = require('express')
+// const { getJardineros, getJardinero, getJardineroFiltro } = require('../controllers/jardineria')
 
-//const rutas = Router()
+// const rutas = Router()
 
-//rutas.get('/', getJardineros);
-//rutas.get('/:idJardinero', getJardinero);
+// rutas.get('/', getJardineros);
+// rutas.get('/:idJardinero', getJardinero);
 
-//module.exports = rutas
+// module.exports = rutas
 
 const express = require('express')
 const { getJardineros, getJardinero } = require('../controllers/jardineria')
 
 const router = express.Router()
 
-//router.get('/filtro', getJardineroFiltro);
-router.get('/:idJardinero', getJardinero);
-router.get('/', getJardineros);
+// router.get('/filtro', getJardineroFiltro);
+router.get('/:idJardinero', getJardinero)
+router.get('/', getJardineros)
 
 module.exports = router
