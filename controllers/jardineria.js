@@ -33,7 +33,7 @@ const getJardineroId = (req = request, res = response) => {
   const { idJardinero } = req.params
   console.log(idJardinero)
 
-  axios.get(`https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria`)
+  axios.get('https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria')
     .then((response) => {
       const { data } = response
 
