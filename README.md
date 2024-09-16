@@ -6,5 +6,5 @@ Aplicación desarrollada con Node js.
 # Ambiente productivo
 https://homeexpert.onrender.com
 
-# Ambiente develpment 
+# Ambiente development 
 https://homeexpert-development.onrender.com
