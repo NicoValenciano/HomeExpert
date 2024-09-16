@@ -15,6 +15,9 @@ class Server {
   rutas () {
     this.app.use('/api/v1/jardineria', require('../routes/jardineria')) // Integrante 1
     this.app.use('/api/v1/mantenimiento', require('../routes/mantenimiento')) // Diaz Jonatan
+    this.app.use('/api/v1/cuidadoPersona', require('../routes/cuidadoPersona')) // Dahua Bruno
+    this.app.use('/api/v1/paseador', require('../routes/paseador')) // Piergentili Camila
+
   }
 
   listen () {
