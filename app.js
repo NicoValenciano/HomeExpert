@@ -1,5 +1,6 @@
-const express = require('express');
-const app = express();
-require('dotenv').config();
+require('dotenv').config()
+const Server = require('./models/server')
 
-console.log("Hola");
+const servidor = new Server()
+
+servidor.listen()
