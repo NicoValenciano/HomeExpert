@@ -17,7 +17,7 @@ class Server {
     this.app.use('/api/v1/mantenimiento', require('../routes/mantenimiento')) // Diaz Jonatan
     this.app.use('/api/v1/cuidadoPersona', require('../routes/cuidadoPersona')) // Dahua Bruno
     this.app.use('/api/v1/paseador', require('../routes/paseador')) // Piergentili Camila
-
+    this.app.use('/api/v1/LimpiezadelHogar', require('../routes/limpieza')) // Murano Lucila
   }
 
   listen () {
