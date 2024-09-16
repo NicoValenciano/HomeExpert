@@ -11,11 +11,10 @@ const router = express.Router()
 router.get('/', getMantenimientos)
 
 // Ruta para obtener un mantenimiento específico por su ID
-router.get('/:idMantenimiento', getMantenimientoPorId);
+router.get('/:idMantenimiento', getMantenimientoPorId)
 
 // Ruta para obtener los mantenimientos filtrados por sexo
-router.get('/sexo/:sexo', getMantenimientoPorSexo);
-
+router.get('/sexo/:sexo', getMantenimientoPorSexo)
 
 // Exporto el router
 module.exports = router
