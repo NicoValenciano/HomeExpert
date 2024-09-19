@@ -3,7 +3,7 @@ const { getJardineros, getJardinero, getJardineroFiltro } = require('../controll
 
 const router = express.Router()
 
-router.get('/filtro', getJardineroFiltro);
+router.get('/filtro', getJardineroFiltro)
 router.get('/:idJardinero', getJardinero)
 router.get('/', getJardineros)
 
