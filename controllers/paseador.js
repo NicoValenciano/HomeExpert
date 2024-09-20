@@ -21,7 +21,6 @@ const getAllPaseadores = (req = request, res = response) => {
 
 // Obtengo un paseador por id
 const getPaseadorPorId = (req = request, res = response) => {
-
   const { idPaseador = '' } = req.params
   console.log(req.params)
 
@@ -44,12 +43,9 @@ const getPaseadorPorId = (req = request, res = response) => {
     })
 }
 
-
-//Ruta que trae todos los paseadores depende su disponibilidad
+// Ruta que trae todos los paseadores depende su disponibilidad
 const getPaseadorPerrosConFiltro = (req = request, res = response) => {
-
   const { disponibilidad = '' } = req.query
-
 
   const filtro = disponibilidad ? `?disponibilidad=${disponibilidad}` : ''
 

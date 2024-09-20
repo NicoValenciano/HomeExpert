@@ -47,7 +47,6 @@ const getMantenimientoPorId = (req = request, res = response) => {
     })
 }
 
-
 /* Función para obtener empleados de mantenimiento filtrados por oficio en caso de no pasar oficio
   se muestran todos los empleados de mantenimiento */
 
@@ -74,7 +73,6 @@ const getMantenimientosPorOficio = (req = request, res = response) => {
       })
     })
 }
-
 
 module.exports = {
   getMantenimientos,

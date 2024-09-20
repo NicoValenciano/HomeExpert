@@ -3,11 +3,8 @@ const { getAllPaseadores, getPaseadorPorId, getPaseadorPerrosConFiltro } = requi
 
 const rutas = express.Router()
 
-
-
 rutas.get('/filtro', getPaseadorPerrosConFiltro)
 rutas.get('/:idPaseador', getPaseadorPorId)
 rutas.get('/', getAllPaseadores)
 
 module.exports = rutas
-
