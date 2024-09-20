@@ -18,8 +18,8 @@ const getMantenimientos = (req = request, res = response) => {
     })
     .catch((error) => {
       console.log(error)
-      res.status(400).json({
-        msg: 'Error',
+      res.status(404).json({
+        msg: 'Error, no se pudo obtener la lista de empleados de mantenimiento',
         error
       })
     })
@@ -40,48 +40,44 @@ const getMantenimientoPorId = (req = request, res = response) => {
     })
     .catch((error) => {
       console.log(error)
-      res.status(400).json({
-        msg: 'Error',
+      res.status(404).json({
+        msg: 'Error, no se pudo obtener el empleado de mantenimiento con ese id',
         error
       })
     })
 }
 
-// Función para filtrar empleados por sexo
-const getMantenimientoPorSexo = (req = request, res = response) => {
-  const { sexo } = req.params // Obtenemos el valor del parámetro sexo desde req.params
-  console.log(`Mostrando empleados de mantenimiento con sexo: ${sexo}`)
 
-  axios.get('https://66e41d3ed2405277ed132021.mockapi.io/api/v1/mantenimiento')
+/* Función para obtener empleados de mantenimiento filtrados por oficio en caso de no pasar oficio
+  se muestran todos los empleados de mantenimiento */
+
+const getMantenimientosPorOficio = (req = request, res = response) => {
+  const { oficio = '' } = req.query // Capturo el parámetro oficio de la query
+  console.log(`Filtrando por oficio: ${oficio}`)
+
+  const filtro = (oficio) ? `?oficio=${oficio}` : ''
+
+  axios.get(`https://66e41d3ed2405277ed132021.mockapi.io/api/v1/mantenimiento${filtro}`)
     .then((response) => {
       const { data = [] } = response
 
-      // Filtramos por el sexo indicado, ignorando mayúsculas/minúsculas
-      const filteredData = data.filter(item => item.sexo.toLowerCase() === sexo.toLowerCase())
-
-      if (filteredData.length > 0) {
-        res.status(200).json({
-          msg: 'Ok',
-          data: filteredData
-        })
-      } else {
-        res.status(404).json({
-          msg: 'No se encontraron empleados con el sexo especificado',
-          data: []
-        })
-      }
+      res.status(200).json({
+        msg: 'Ok',
+        data
+      })
     })
     .catch((error) => {
       console.log(error)
-      res.status(400).json({
-        msg: 'Error',
-        error: error.message
+      res.status(404).json({
+        msg: 'Error, no se pudo obtener la lista de empleados de mantenimiento con ese oficio',
+        error
       })
     })
 }
 
+
 module.exports = {
   getMantenimientos,
   getMantenimientoPorId,
-  getMantenimientoPorSexo
+  getMantenimientosPorOficio
 }
