@@ -4,28 +4,6 @@ const axios = require('axios')
 // Importo los objetos request y response
 const { request, response } = require('express')
 
-// Función para obtener todos los empleados de mantenimientos
-/* const getMantenimientos = (req = request, res = response) => {
-  console.log('Obteniendo lista de empleados de mantenimiento COMPLETA.')
-
-  axios.get('https://66e41d3ed2405277ed132021.mockapi.io/api/v1/mantenimiento')
-    .then((response) => {
-      const { data = [] } = response
-      res.status(200).json({
-        msg: 'Ok',
-        data
-      })
-    })
-    .catch((error) => {
-      console.log(error)
-      res.status(400).json({
-        msg: 'Error',
-        error
-      })
-    })
-}
-*/
-
 // Función para obtener empleado por id
 const getMantenimientoPorId = (req = request, res = response) => {
   const { idMantenimiento } = req.params
@@ -79,37 +57,37 @@ const getMantenimientoPorSexo = (req = request, res = response) => {
         error: error.message
       })
     })
-}
+  }
 
-// Función para obtener empleados de mantenimiento filtrados por oficio en caso de no pasar
-// oficio, se muestran todos los empleados de mantenimiento
-const getMantenimientosPorOficio = (req = request, res = response) => {
-  const { oficio = '' } = req.query // Capturo el parámetro oficio de la query
-  console.log(`Filtrando por oficio: ${oficio}`)
+  /* Función para obtener empleados de mantenimiento filtrados por oficio en caso de no pasar oficio 
+  se muestran todos los empleados de mantenimiento */
 
-  // Construyo el filtro si se ha proporcionado un oficio
-  const filtro = (oficio) ? `?oficio=${oficio}` : ''
+  const getMantenimientosPorOficio = (req = request, res = response) => {
+  const { oficio = '' } = req.query; // Capturo el parámetro oficio de la query
+  console.log(`Filtrando por oficio: ${oficio}`);
+ 
+  const filtro = (oficio) ? `?oficio=${oficio}` : '';
 
   axios.get(`https://66e41d3ed2405277ed132021.mockapi.io/api/v1/mantenimiento${filtro}`)
     .then((response) => {
-      const { data = [] } = response
+      const { data = [] } = response;
 
       res.status(200).json({
         msg: 'Ok',
         data
-      })
+      });
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
       res.status(400).json({
         msg: 'Error',
         error
-      })
-    })
-}
+      });
+    });
+  };
 
 module.exports = {
-  // getMantenimientos,
+  
   getMantenimientoPorId,
   getMantenimientoPorSexo,
   getMantenimientosPorOficio
