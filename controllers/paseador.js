@@ -21,7 +21,6 @@ const getAllPaseadores = (req = request, res = response) => {
 
 // Obtengo un paseador por id
 const getPaseadorPorId = (req = request, res = response) => {
-  console.log('ingresando a getPaseadorPorId')
   const { idPaseador = '' } = req.params
   console.log(req.params)
 
@@ -44,13 +43,11 @@ const getPaseadorPorId = (req = request, res = response) => {
     })
 }
 
+// Ruta que trae todos los paseadores depende su disponibilidad
 const getPaseadorPerrosConFiltro = (req = request, res = response) => {
-  console.log('ingresando a getPaseadorPerrosConFiltro ')
   const { disponibilidad = '' } = req.query
-  console.log(req.query)
-  console.log(disponibilidad)
 
-  const filtro = disponibilidad ? `?disponibilidad=${encodeURIComponent(disponibilidad)}` : ''
+  const filtro = disponibilidad ? `?disponibilidad=${disponibilidad}` : ''
 
   axios.get(`https://66e209c3c831c8811b570593.mockapi.io/api/v1/paseador${filtro}`)
     .then((response) => {
