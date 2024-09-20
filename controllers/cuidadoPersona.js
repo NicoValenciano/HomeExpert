@@ -39,7 +39,36 @@ const getCuidadoresPorId = (req = request, res = response) => {
     })
 }
 
+const getCuidadoresPorCalificacion = async (req = request, res = response) => {
+  const { calificacion } = req.params;  
+
+  try {
+    const response = await axios.get('https://66e20943c831c8811b5703f6.mockapi.io/cuidadoresPersonas');
+    let personas = response.data;
+
+    if (calificacion) {
+      personas = personas.filter(persona => 
+        persona.calificacion >= parseInt(calificacion, 10) && persona.disponibilidad === true
+      );
+    } else {
+      personas = personas.filter(persona => persona.disponibilidad === true);
+    }
+
+    res.status(200).json({
+      msg: 'Ok',
+      data: personas
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Error al obtener la información',
+      error: error.message
+    });
+  }
+};
+
+
 module.exports = {
   getCuidadores,
-  getCuidadoresPorId
+  getCuidadoresPorId,
+  getCuidadoresPorCalificacion
 }
