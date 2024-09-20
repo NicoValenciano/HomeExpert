@@ -2,13 +2,13 @@
 const express = require('express')
 
 // importo el controlador de mantenimientos
-const { getMantenimientos, getMantenimientoPorId, getMantenimientoPorSexo } = require('../controllers/mantenimiento')
+const { getMantenimientoPorId, getMantenimientoPorSexo, getMantenimientosPorOficio } = require('../controllers/mantenimiento')
 
 // Creo una nueva instancia de un router de Express
 const router = express.Router()
 
-// Ruta para obtener todos los mantenimientos
-router.get('/', getMantenimientos)
+// Ruta para obtener empleados de mantenimiento por oficio o lista completa
+router.get('/', getMantenimientosPorOficio)
 
 // Ruta para obtener un mantenimiento específico por su ID
 router.get('/:idMantenimiento', getMantenimientoPorId)
