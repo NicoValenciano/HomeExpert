@@ -21,31 +21,22 @@ const getLimpieza = (req = request, res = response) => {
       })
     })
 }
-// funcion que me trae a las personas de limpieza por edad (req.params)
-const getLimpiezaByEdad = (req = request, res = response) => {
-  const { edad } = req.params
 
-  axios.get(`https://66e20a67c831c8811b5706cb.mockapi.io/api/v1/LimpiezadelHogar/${edad}`)
+// funcion que me trae a las personas de limpieza por ID (req.params)
+const getLimpiezaById = (req = request, res = response) => {
+  const { id } = req.params
+
+  axios.get(`https://66e20a67c831c8811b5706cb.mockapi.io/api/v1/LimpiezadelHogar/${id}`)
     .then((response) => {
-      const { data = [] } = response
-
-      const personasPorEdad = data.filter(persona => persona.edad === edad)
-
-      if (personasPorEdad.length > 0) {
-        res.status(200).json({
-          msg: 'Ok',
-          data: personasPorEdad
-        })
-      } else {
-        res.status(404).json({
-          msg: `No se encontraron personas de limpieza con edad ${edad}`,
-          data: []
-        })
-      }
+      const { data } = response
+      res.status(200).json({
+        msg: 'Se encontraron personas',
+        data
+      })
     })
     .catch((error) => {
       res.status(400).json({
-        msg: 'Error al obtener las personas de limpieza',
+        msg: 'Error al obtener la persona de limpieza por ID',
         error
       })
     })
@@ -90,6 +81,6 @@ const getLimpiezaBySexo = (req = request, res = response) => {
 
 module.exports = {
   getLimpieza,
-  getLimpiezaByEdad,
+  getLimpiezaById,
   getLimpiezaBySexo
 }
