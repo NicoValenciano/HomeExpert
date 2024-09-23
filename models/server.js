@@ -1,4 +1,6 @@
+const path = require('path')
 const express = require('express')
+
 
 class Server {
   constructor () {
@@ -18,6 +20,12 @@ class Server {
     this.app.use('/api/v1/cuidadoPersona', require('../routes/cuidadoPersona')) // Dahua Bruno
     this.app.use('/api/v1/paseador', require('../routes/paseador')) // Piergentili Camila
     this.app.use('/api/v1/LimpiezadelHogar', require('../routes/limpieza')) // Murano Lucila
+
+    // Ruta para manejar todas las rutas que no existen
+    
+    this.app.use('/:any', (req, res) => {
+      res.sendFile(path.join(__dirname, '../public/index.html'))
+    })
   }
 
   listen () {
