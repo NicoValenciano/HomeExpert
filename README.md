@@ -6,9 +6,13 @@ HomeExpert es una aplicación web que permite a los usuarios encontrar y contrat
 En esta version se implemten los siguientes endpoints:
 
 /api/v1/mantenimiento (desarrollada por Diaz Jonatan) 
+
 /api/v1/cuidadoPersona (desarrollada por Dahua Bruno) 
+
 /api/v1/paseador (desarrollada por Piergentili Camila) 
+
 /api/v1/LimpiezadelHogar (desarrollada por Murano Lucila) 
+
 /api/v1/jardineria (desarrollada por Valenciano Nicolas)
 
 # Tecnologías
