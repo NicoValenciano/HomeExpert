@@ -20,7 +20,7 @@ const getMantenimientos = (req = request, res = response) => {
       console.log(error)
       res.status(404).json({
         msg: 'Error, no se pudo obtener la lista de empleados de mantenimiento',
-        error
+        error: error.msg
       })
     })
 }
@@ -42,7 +42,7 @@ const getMantenimientoPorId = (req = request, res = response) => {
       console.log(error)
       res.status(404).json({
         msg: 'Error, no se pudo obtener el empleado de mantenimiento con ese id',
-        error
+        error: error.msg
       })
     })
 }
@@ -69,7 +69,7 @@ const getMantenimientosPorOficio = (req = request, res = response) => {
       console.log(error)
       res.status(404).json({
         msg: 'Error, no se pudo obtener la lista de empleados de mantenimiento con ese oficio',
-        error
+        error: error.msg
       })
     })
 }
