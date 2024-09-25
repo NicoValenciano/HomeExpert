@@ -4,10 +4,8 @@ const { getCuidadores, getCuidadoresPorId, getCuidadoresPorCalificacion } = requ
 
 const router = express.Router()
 
+router.get('/filtro', getCuidadoresPorCalificacion)
 router.get('/', getCuidadores)
-
 router.get('/:idCuidador', getCuidadoresPorId)
-
-router.get('/calificacion/:calificacion', getCuidadoresPorCalificacion)
 
 module.exports = router
