@@ -8,6 +8,4 @@ router.get('/filtro', getCuidadoresPorCalificacion)
 router.get('/', getCuidadores)
 router.get('/:idCuidador', getCuidadoresPorId)
 
-
-
 module.exports = router
