@@ -38,7 +38,7 @@ const getPaseadorPorId = async (req = request, res = response) => {
 const getPaseadorPerrosConFiltro = async (req = request, res = response) => {
   const { disponibilidad = '' } = req.query
 
-  if (disponibilidad !== '' && disponibilidad !== 'true' && disponibilidad !== 'false') {
+  if (disponibilidad && !['true', 'false'].includes(disponibilidad)) {
     return res.status(400).json({
       msg: 'Bad Request',
       err: 'El parámetro de disponibilidad es inválido'
