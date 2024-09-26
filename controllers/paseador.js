@@ -2,68 +2,89 @@ const axios = require('axios')
 const { request, response } = require('express')
 
 // Obtengo todos los paseadores
-const getAllPaseadores = (req = request, res = response) => {
-  axios.get('https://66e209c3c831c8811b570593.mockapi.io/api/v1/paseador')
-    .then((response) => {
-      const { data = [] } = response
-      res.status(200).json({
-        msg: 'Ok',
-        data
-      })
+const getAllPaseadores = async (req = request, res = response) => {
+  try {
+    const { data = [] } = await axios.get('https://66e209c3c831c8811b570593.mockapi.io/api/v1/paseador')
+    res.status(200).json({
+      msg: 'Ok',
+      data
     })
-    .catch((err) => {
-      res.status(400).json({
-        msg: 'Error',
-        err
-      })
-    })
+  } catch (err) {
+    if (err.response) {
+      handlerException(res, err, err.response)
+    }
+  }
 }
 
 // Obtengo un paseador por id
-const getPaseadorPorId = (req = request, res = response) => {
+const getPaseadorPorId = async (req = request, res = response) => {
   const { idPaseador = '' } = req.params
-  console.log(req.params)
 
-  axios.get(`https://66e209c3c831c8811b570593.mockapi.io/api/v1/paseador/${idPaseador}`)
-    .then((response) => {
-      const data = response.data
+  try {
+    const { data } = await axios.get(`https://66e209c3c831c8811b570593.mockapi.io/api/v1/paseador/${idPaseador}`)
 
-      res.status(200).json({
-        msg: 'Ok',
-        data
-
-      })
+    res.status(200).json({
+      msg: 'Ok',
+      data
     })
-    .catch((err) => {
-      console.log(err)
-      res.status(400).json({
-        msg: 'Error',
-        err
-      })
-    })
+  } catch (err) {
+    if (err.response) {
+      handlerException(res, err, err.response)
+    }
+  }
 }
 
 // Ruta que trae todos los paseadores depende su disponibilidad
-const getPaseadorPerrosConFiltro = (req = request, res = response) => {
+const getPaseadorPerrosConFiltro = async (req = request, res = response) => {
   const { disponibilidad = '' } = req.query
+
+  if (disponibilidad !== '' && disponibilidad !== 'true' && disponibilidad !== 'false') {
+    return res.status(400).json({
+      msg: 'Bad Request',
+      err: 'El parámetro de disponibilidad es inválido'
+    })
+  }
 
   const filtro = disponibilidad ? `?disponibilidad=${disponibilidad}` : ''
 
-  axios.get(`https://66e209c3c831c8811b570593.mockapi.io/api/v1/paseador${filtro}`)
-    .then((response) => {
-      const data = response.data
+  try {
+    const { data = [] } = await axios.get(`https://66e209c3c831c8811b570593.mockapi.io/api/v1/paseador${filtro}`)
 
-      res.status(200).json({
-        msg: 'Ok',
-        data
-      })
+    res.status(200).json({
+      msg: 'Ok',
+      data
     })
-    .catch((err) => {
+  } catch (err) {
+    if (err.response) {
+      handlerException(res, err, err.response)
+    }
+  }
+}
+
+const handlerException = (res, err, statusCode) => {
+  const status = statusCode.status
+
+  switch (status) {
+    case 400:
       res.status(400).json({
-        msg: 'Error',
-        err
+        msg: 'Bad Request',
+        err: err.message
       })
-    })
+      break
+
+    case 404:
+      res.status(404).json({
+        msg: 'No se encontraron paseadores',
+        err: err.message
+      })
+      break
+
+    default:
+      res.status(500).json({
+        msg: 'Internal Server Error',
+        err: err.message
+      })
+  }
 }
 
 module.exports = {
