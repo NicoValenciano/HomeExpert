@@ -20,7 +20,7 @@ const getMantenimientos = (req = request, res = response) => {
       console.log(error)
       res.status(404).json({
         msg: 'Error, no se pudo obtener la lista de empleados de mantenimiento',
-        error
+        error: error.msg
       })
     })
 }
@@ -42,11 +42,10 @@ const getMantenimientoPorId = (req = request, res = response) => {
       console.log(error)
       res.status(404).json({
         msg: 'Error, no se pudo obtener el empleado de mantenimiento con ese id',
-        error
+        error: error.msg
       })
     })
 }
-
 
 /* Función para obtener empleados de mantenimiento filtrados por oficio en caso de no pasar oficio
   se muestran todos los empleados de mantenimiento */
@@ -70,11 +69,10 @@ const getMantenimientosPorOficio = (req = request, res = response) => {
       console.log(error)
       res.status(404).json({
         msg: 'Error, no se pudo obtener la lista de empleados de mantenimiento con ese oficio',
-        error
+        error: error.msg
       })
     })
 }
-
 
 module.exports = {
   getMantenimientos,

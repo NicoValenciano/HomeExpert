@@ -4,28 +4,59 @@ const { request, response } = require('express')
 // GET de jardineros
 
 const getJardineros = (req = request, res = response) => {
-  const { lastname = '', year = '', category = '', page = '' } = req.query
-  console.log(lastname, year, category, page)
+  const { nombre = '', foto = '', servicios = '', precio = '', ciudad = '', calificacion = '', id = '' } = req.query
+  console.log(nombre, foto, servicios, precio, ciudad, calificacion, id)
 
-  const filtro = (lastname) ? `?lastname=${lastname}` : ''
-
-  axios.get(`https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria${filtro}`)
-    .then((response) => {
-      const { data = [] } = response
-      // handle success
-      res.status(200).json({
-        msg: 'Ok',
-        data
+  try {
+    axios.get('https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria')
+      .then((response) => {
+        const { data = [] } = response
+        // handle success
+        res.status(200).json({
+          msg: 'Ok',
+          data
+        })
       })
-    })
-    .catch((error) => {
-      // handle error
-      console.log(error)
-      res.status(400).json({
-        msg: 'Error',
-        error
+      .catch((error) => {
+        if (error.response) {
+          switch (error.response.status) {
+            // handle error 400
+            case 400:
+              res.status(400).json({
+                msg: 'Bad Request',
+                error: error.message
+              })
+              break
+            // handle error 404
+            case 404:
+              res.status(404).json({
+                msg: 'No se encontraron jardineros',
+                error: error.message
+              })
+              break
+            // handle error 500
+            default:
+              res.status(500).json({
+                msg: 'Internal Server Error',
+                error: error.message
+              })
+          }
+        } else {
+          // handle error 500
+          res.status(500).json({
+            msg: 'Internal Server Error',
+            error: error.message
+          })
+        }
       })
+  } catch (error) {
+    // handle error 500
+    console.error('Server error:', error)
+    res.status(500).json({
+      msg: 'Internal Server Error',
+      error: error.message
     })
+  }
 }
 
 // GET de jardinero por Id
@@ -34,50 +65,119 @@ const getJardinero = (req = request, res = response) => {
   const { idJardinero = '' } = req.params
   console.log(idJardinero)
 
-  axios.get(`https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria/${idJardinero}`)
-    .then((response) => {
-      const { data } = response
-      // handle success
-      res.status(200).json({
-        msg: 'Ok',
-        data
+  try {
+    axios.get(`https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria/${idJardinero}`)
+      .then((response) => {
+        const { data } = response
+        // handle success
+        res.status(200).json({
+          msg: 'Ok',
+          data
+        })
       })
-    })
-    .catch((error) => {
-      // handle error
-      console.log(error)
-      res.status(400).json({
-        msg: 'Error',
-        error
+      .catch((error) => {
+        if (error.response) {
+          switch (error.response.status) {
+            // handle error 400
+            case 400:
+              res.status(400).json({
+                msg: 'Bad Request',
+                error: error.message
+              })
+              break
+            // handle error 404
+            case 404:
+              res.status(404).json({
+                msg: 'Jardinero no encontrado',
+                error: error.message
+              })
+              break
+            // handle error 500
+            default:
+              res.status(500).json({
+                msg: 'Internal Server Error',
+                error: error.message
+              })
+          }
+        } else {
+          // handle error 500
+          res.status(500).json({
+            msg: 'Internal Server Error',
+            error: error.message
+          })
+        }
       })
+  } catch (error) {
+    // handle error 500
+    console.error('Server error:', error)
+    res.status(500).json({
+      msg: 'Internal Server Error',
+      error: error.message
     })
+  }
 }
 
-// GET de jardinero con filtro
+// GET de jardinero con filtro por nombre, servicios, precio, ciudad, id y/o calificacion (se pueden concatenar)
 
 const getJardineroFiltro = (req = request, res = response) => {
-  const { nombre = '', foto = '', servicios = '', precio = '', ciudad = '', id = '' } = req.query
-  console.log(nombre, foto, servicios, precio, ciudad, id)
+  const { nombre = '', servicios = '', precio = '', ciudad = '', id = '', calificacion = '' } = req.query
+  console.log(nombre, servicios, precio, ciudad, id, calificacion)
 
-  const filtro = (nombre) ? `?nombre=${nombre}` : ''
+  const filtros = Object.entries({ nombre, servicios, precio, ciudad, id, calificacion })
+    .filter(([key, value]) => value !== undefined)
+    .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+    .join('&')
 
-  axios.get(`https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria${filtro}`)
-    .then((response) => {
-      const { data = [] } = response
-      // handle success
-      res.status(200).json({
-        msg: 'Ok',
-        data
+  try {
+    axios.get(`https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria${filtros ? `?${filtros}` : ''}`)
+      .then((response) => {
+        const { data = [] } = response
+        // handle success
+        res.status(200).json({
+          msg: 'Ok',
+          data
+        })
       })
-    })
-    .catch((error) => {
-    // handle error
-      console.log(error)
-      res.status(400).json({
-        msg: 'Error',
-        error
+      .catch((error) => {
+        if (error.response) {
+          switch (error.response.status) {
+            // handle error 400
+            case 400:
+              res.status(400).json({
+                msg: 'Bad Request',
+                error: error.message
+              })
+              break
+              // handle error 404
+            case 404:
+              res.status(404).json({
+                msg: 'No se encontraron jardineros con ese filtro',
+                error: error.message
+              })
+              break
+              // handle error 500
+            default:
+              res.status(500).json({
+                msg: 'Internal Server Error',
+                error: error.message
+              })
+          }
+        } else {
+          // handle error 500
+          res.status(500).json({
+            msg: 'Internal Server Error',
+            error: error.message
+          })
+        }
       })
+  } catch (error) {
+    // handle error 500
+    console.error('Server error:', error)
+    res.status(500).json({
+      msg: 'Internal Server Error',
+      error: error.message
     })
+  }
 }
 
 module.exports = {
