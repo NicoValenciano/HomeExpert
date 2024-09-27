@@ -6,7 +6,7 @@ const getLimpieza = (req = request, res = response) => {
   const { nombre = '', apellido = '', foto = '', edad = '', sexo = '', disponible = '', precio = '', calificacion = '', id = '' } = req.query
   console.log(nombre, apellido, foto, edad, sexo, disponible, precio, calificacion, id)
 
-  axios.get('https://66e20a67c831c8811b5706cb.mockapi.io/api/v1/limpiezadelHogar')
+  axios.get('https://66e20a67c831c8811b5706cb.mockapi.io/api/v1/limpiezaDelHogar')
     .then((response) => {
       const { data = [] } = response
       res.status(200).json({
@@ -26,7 +26,8 @@ const getLimpieza = (req = request, res = response) => {
 const getLimpiezaById = (req = request, res = response) => {
   const { id } = req.params
 
-  axios.get(`https://66e20a67c831c8811b5706cb.mockapi.io/api/v1/limpiezadelHogar/${id}`)
+  axios.get(`https://66e20a67c831c8811b5706cb.mockapi.io/api/v1/limpiezaDelHogar/${id}`)
+
     .then((response) => {
       const { data } = response
 
@@ -60,17 +61,19 @@ const getLimpiezaById = (req = request, res = response) => {
 // Función que trae personas de limpieza por sexo (req.query)
 const getLimpiezaBySexo = (req = request, res = response) => {
   const { sexo = '' } = req.query
-  const filtro = sexo ? `?sexo=${sexo}` : ''
-  // if (!sexo) {
-  //   return res.status(400).json({
-  //     msg: 'El parámetro "sexo" es requerido',
-  //     data: []
-  //   })
-  // }
 
-  axios.get(`https://66e20a67c831c8811b5706cb.mockapi.io/api/v1/limpiezadelHogar/${filtro}`)
+  if (!sexo) {
+    return res.status(400).json({
+      msg: 'El parámetro "sexo" es requerido',
+      data: []
+    })
+  }
+
+  axios.get('https://66e20a67c831c8811b5706cb.mockapi.io/api/v1/limpiezaDelHogar')
+
     .then((response) => {
       const { data = [] } = response
+      // Filtramos los resultados manualmente
       const personasPorSexo = data.filter(persona => persona.sexo === sexo)
 
       if (personasPorSexo.length > 0) {
@@ -88,7 +91,7 @@ const getLimpiezaBySexo = (req = request, res = response) => {
     .catch((error) => {
       res.status(400).json({
         msg: 'Error al tratar de obtener las personas de limpieza',
-        error
+        error: error.message
       })
     })
 }
