@@ -3,7 +3,7 @@ const { getLimpieza, getLimpiezaById, getLimpiezaBySexo } = require('../controll
 
 const rutas = Router()
 
-// ruta que tiene todas las personas de limpieza
+// ruta para obtener todas las personas de limpieza
 rutas.get('/', getLimpieza)
 // Ruta para obtener a una persona de limpieza por ID (req.params)
 rutas.get('/:id', getLimpiezaById)
