@@ -4,8 +4,8 @@ const { request, response } = require('express')
 // GET de jardineros
 
 const getJardineros = (req = request, res = response) => {
-  const { lastname = '', year = '', category = '', page = '' } = req.query
-  console.log(lastname, year, category, page)
+  const { nombre = '', foto = '', servicios = '', precio = '', ciudad = '', calificacion = '', id = '' } = req.query
+  console.log(nombre, foto, servicios, precio, ciudad, calificacion, id)
 
   try {
     axios.get('https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria')
