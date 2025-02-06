@@ -13,8 +13,6 @@ router.use(cors({
   optionsSuccessStatus: 204
 }))
 
-router.options('*', cors())
-
 router.get('/filtro', getJardineroFiltro)
 router.get('/:idJardinero', getJardinero)
 router.get('/', getJardineros)
