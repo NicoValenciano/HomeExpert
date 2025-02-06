@@ -5,15 +5,15 @@ const { getJardineros, getJardinero, getJardineroFiltro } = require('../controll
 const router = express.Router()
 
 router.use(cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
-    credentials: true,
-    preflightContinue: true,
-    optionsSuccessStatus: 204
-  }));
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+  credentials: true,
+  preflightContinue: true,
+  optionsSuccessStatus: 204
+}))
 
-router.options('*', cors());
+router.options('*', cors())
 
 router.get('/filtro', getJardineroFiltro)
 router.get('/:idJardinero', getJardinero)
