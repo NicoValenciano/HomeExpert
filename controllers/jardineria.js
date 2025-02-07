@@ -4,11 +4,11 @@ const { request, response } = require('express')
 // GET de jardineros
 
 const getJardineros = (req = request, res = response) => {
-  const { lastname = '', year = '', category = '', page = '' } = req.query
-  console.log(lastname, year, category, page)
+  const { name = '', avatar = '', servicio = '', precio = '', disponibilidad = '', calificacion = '', id = '', sexo = '' } = req.query
+  console.log(name, avatar, servicio, precio, disponibilidad, calificacion, id, sexo)
 
   try {
-    axios.get('https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria')
+    axios.get('https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/jardineria')
       .then((response) => {
         const { data = [] } = response
         // handle success
@@ -66,7 +66,7 @@ const getJardinero = (req = request, res = response) => {
   console.log(idJardinero)
 
   try {
-    axios.get(`https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria/${idJardinero}`)
+    axios.get(`https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/jardineria/${idJardinero}`)
       .then((response) => {
         const { data } = response
         // handle success
@@ -117,19 +117,19 @@ const getJardinero = (req = request, res = response) => {
   }
 }
 
-// GET de jardinero con filtro por nombre, servicios, precio, ciudad, id y/o calificacion (se pueden concatenar)
+// GET de jardinero con filtro por name, servicio, precio, disponibilidad, id y/o calificacion (se pueden concatenar)
 
 const getJardineroFiltro = (req = request, res = response) => {
-  const { nombre = '', servicios = '', precio = '', ciudad = '', id = '', calificacion = '' } = req.query
-  console.log(nombre, servicios, precio, ciudad, id, calificacion)
+  const { name = '', servicio = '', precio = '', disponibilidad = '', id = '', calificacion = '', sexo = '' } = req.query
+  console.log(name, servicio, precio, disponibilidad, id, calificacion, sexo)
 
-  const filtros = Object.entries({ nombre, servicios, precio, ciudad, id, calificacion })
+  const filtros = Object.entries({ name, servicio, precio, disponibilidad, id, calificacion, sexo })
     .filter(([key, value]) => value !== undefined)
     .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
     .join('&')
 
   try {
-    axios.get(`https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/Jardineria${filtros ? `?${filtros}` : ''}`)
+    axios.get(`https://66d25ca4184dce1713cd6d59.mockapi.io/api/v1/jardineria${filtros ? `?${filtros}` : ''}`)
       .then((response) => {
         const { data = [] } = response
         // handle success
