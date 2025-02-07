@@ -58,10 +58,11 @@ const getLimpiezaById = (req = request, res = response) => {
     })
 }
 
-// Función que trae personas de limpieza por sexo (req.query)
+// // Función que trae personas de limpieza por sexo (req.query)
 const getLimpiezaBySexo = (req = request, res = response) => {
   const { sexo = '' } = req.query
 
+  // Verificamos que el parámetro 'sexo' esté presente
   if (!sexo) {
     return res.status(400).json({
       msg: 'El parámetro "sexo" es requerido',
@@ -70,11 +71,15 @@ const getLimpiezaBySexo = (req = request, res = response) => {
   }
 
   axios.get('https://66e20a67c831c8811b5706cb.mockapi.io/api/v1/limpiezaDelHogar')
-
     .then((response) => {
       const { data = [] } = response
-      // Filtramos los resultados manualmente
-      const personasPorSexo = data.filter(persona => persona.sexo === sexo)
+
+      // Normalizamos el sexo de la query
+      const sexoFiltro = sexo.trim().toLowerCase()
+
+      const personasPorSexo = data.filter(persona =>
+        persona.sexo && persona.sexo.trim().toLowerCase() === sexoFiltro
+      )
 
       if (personasPorSexo.length > 0) {
         res.status(200).json({
